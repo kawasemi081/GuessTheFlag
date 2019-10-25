@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  GuessTheFlag
 //
-//  Created on 2019/10/24.
+//  Created by MIsono on 2019/10/25.
 //  Copyright © 2019 misono. All rights reserved.
 //
 
