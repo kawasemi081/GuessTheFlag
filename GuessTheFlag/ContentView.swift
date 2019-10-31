@@ -41,18 +41,18 @@ struct ContentView: View {
                     Button(action: {
                         self.flagTapped(number)
                     }) {
-                        Image(self.countries[number])
-                            .renderingMode(.original)
-                            /**
-                              We’re going to use three here: one to change the shape of flags, one to add a border around the flags, and a third to add a shadow.
-                                 1.  __clipShape(Capsule()):__ it looks great for buttons. Making our image capsule shaped is as easy as adding the .clipShape(Capsule()) modifier
-                                 2.  __ overlay():__ As for drawing a border around the image, this is done using the overlay() modifier. This lets us draw another view over the flag, which in our case will be a capsule that has a black stroke around its edge.
-                                 3. __shadow():__making them really stand out from the background.
-                              */
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-                            .shadow(color: .black, radius: 2)
-
+//                        Image(self.countries[number])
+//                            .renderingMode(.original)
+//                            /**
+//                              We’re going to use three here: one to change the shape of flags, one to add a border around the flags, and a third to add a shadow.
+//                                 1.  __clipShape(Capsule()):__ it looks great for buttons. Making our image capsule shaped is as easy as adding the .clipShape(Capsule()) modifier
+//                                 2.  __ overlay():__ As for drawing a border around the image, this is done using the overlay() modifier. This lets us draw another view over the flag, which in our case will be a capsule that has a black stroke around its edge.
+//                                 3. __shadow():__making them really stand out from the background.
+//                              */
+//                            .clipShape(Capsule())
+//                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+//                            .shadow(color: .black, radius: 2)
+                        FlagImage(country: self.countries[number])
                     }
                 }
                 Text("Your total score is " + String(totalScore))
@@ -104,3 +104,15 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct FlagImage: View {
+    var country: String
+    var body: some View {
+        Image(country)
+        .renderingMode(.original)
+        .clipShape(Capsule())
+        .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+        .shadow(color: .black, radius: 2)
+    }
+}
+
