@@ -43,20 +43,25 @@ struct ContentView: View {
                 }
 
                 ForEach(0 ..< 3) { number in
-                    Button(action: {
-                        self.flagTapped(number)
+                    if number == self.correctAnswer {
+                        Button(action: {
+                            self.flagTapped(number)
 
-                        print("test: \(number)")
-                        withAnimation {
-                            if number == self.correctAnswer {
+                            withAnimation {
                                 self.animationAmount += 360
                                 self.animationAmount += 360
                             }
+                        }) {
+                            FlagImage(country: self.countries[number])
                         }
-                    }) {
-                        FlagImage(country: self.countries[number])
+                        .rotation3DEffect(.degrees(self.animationAmount), axis: (x: 0, y: 1, z: 0))
+                    } else {
+                        Button(action: {
+                            self.flagTapped(number)
+                        }) {
+                            FlagImage(country: self.countries[number])
+                        }.opacity(self.animationAmount > 0 ? 0.25 : 1)
                     }
-                    .rotation3DEffect(.degrees(self.animationAmount), axis: (x: 0, y: 1, z: 0))
 
                 }
                 Text("Your total score is " + String(totalScore))
@@ -88,7 +93,9 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        animationAmount = 0.0
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -98,27 +105,6 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct FlagImage: View {
-    var country: String
-    var body: some View {
-        Image(country)
-        .renderingMode(.original)
-        .clipShape(Capsule())
-        .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-        .shadow(color: .black, radius: 2)
-    }
-}
-
-struct CorrectButton: View {
-    var country: String
-    var body: some View {
-        Image(country)
-        .renderingMode(.original)
-        .clipShape(Capsule())
-        .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-        .shadow(color: .black, radius: 2)
-    }
-}
-struct WrongButton: View {
     var country: String
     var body: some View {
         Image(country)
